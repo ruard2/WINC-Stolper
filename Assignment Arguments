@@ -1,0 +1,45 @@
+# Assignment: Arguments
+# By Ruard Stolper
+
+# Part 1
+def greet(name, default_greeting= 'Hello'):
+	greeting = f'{default_greeting} {name}!'
+	return(greeting)
+
+# Part 2
+surface_gravity = {
+	'sun' : 274,
+	'jupiter' :	24.9,
+	'neptune'	: 11.2,
+	'saturn' : 10.4,
+	'earth'	: 9.8,
+	'uranus' : 8.9,
+	'venus' : 8.9,
+	'mars' : 3.7,
+	'mercury' :	3.7,
+	'moon' : 1.6,
+	'pluto' : 0.5
+	}
+
+def force(mass, body = "earth"):
+	force_output = surface_gravity[body]*mass
+	return(force_output)
+
+# Part 3
+def pull(m1, m2, d):
+	G=6.673*(10**-11)
+	pull = (G*m1*m2)/(d**2)
+	return(pull)
+
+# main program calling functions
+if __name__ == "__main__":
+	# Part 1
+	print(greet('Bob', "What's up"))
+	
+	# Part 2
+	needed_force = force(21, 'uranus')
+	print("The force exerted is: ",round(needed_force,2),"N")
+
+	# Part 3
+	pull_force = pull(0.1, 5.972*10**24, 6.371*10**6)
+	print("The gravitational force is: ",round(pull_force,2),"N")
