@@ -1,0 +1,52 @@
+# Assignment files
+# Student Ruard Stolper
+
+__winc_id__ = "ae539110d03e49ea8738fd413ac44ba8"
+__human_name__ = "files"
+
+import os
+import zipfile
+
+#variables
+list_of_files = []
+
+def clean_cache():
+	if os.path.isdir("cache/"):
+		answer = input("File already exist, it will be deleted, are your sure you want to do this? \n Y or N?")
+		if answer == "Y":
+			os.rmdir("cache/")
+		elif answer == "N":
+			input("We will use the already existing file. Please press Enter to continue...")
+		else:
+			answer = input("We did not understand your answer, please only answer with a capital Y or N! ")
+			if answer == "Y":
+				os.rmdir("cache/")
+	else:
+		os.makedirs("cache")
+	
+def cache_zip(zip_file, cache_dir):
+	with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+		zip_ref.extractall(cache_dir)
+
+def cached_files():
+	for root, dirs, files in os.walk(os.path.abspath("cache")):
+		for file in files:
+			list_of_files.append(os.path.join(root, file))
+	return(list_of_files)
+
+def find_password(list_of_files):
+	for file_path in list_of_files:
+		with open(file_path, 'r') as file:
+			content = file.read()
+			if "password" in content:
+				data = content.split()
+				counter=1
+				for dat in data:
+					if dat == "password:":
+						return(data[counter])
+					counter+=1
+
+if __name__ == "__main__":
+	clean_cache()
+	cache_zip("C:/Users/ruard/Program/WINC/data.zip", "C:/Users/ruard/Program/WINC/cache" )
+	print(f'The password is: ', find_password(cached_files()))
